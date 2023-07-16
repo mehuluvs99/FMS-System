@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+  <style>
+      th {
+        white-space: nowrap;
+      }
+      table-responsive {
+        overflow-x: auto;
+        max-width: auto;
+      }
+  </style>
+</head>
+<section class="intro">
+  <div class="bg-image h-100" style="background-color: #f5f7fa;">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="row">
+            <div class="card body">
+			{% if user.is_authenticated %}
+              <div class="card-body p-10">
+
+                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: auto">
+                  <table class="table table-striped mb-0">
+                    <thead style="background-color: #002d72;">
+                      <tr>
+						<th scope="col">Id</th>
+						<th scope="col">Created Time</th>
+						<th scope="col">Company Name</th>
+						<th scope="col">Mobile No.</th>
+						<th scope="col">Email</th>
+						<th scope="col">Phone</th>
+						<th scope="col">Address</th>
+						<th scope="col">City</th>
+						<th scope="col">State</th>
+						<th scope="col">Zipcode</th>
+						<th scope="col">Step Name One</th>
+						<th scope="col">Planned Date One</th>
+						<th scope="col">Actual Date One</th>
+						<th scope="col">Status One</th>
+						<th scope="col">Time Delay One</th>
+						<th scope="col">Step Name Two</th>
+						<th scope="col">Planned Date Two</th>
+						<th scope="col">Actual Date Two</th>
+						<th scope="col">Status Two</th>
+						<th scope="col">Time Delay Two</th>
+					</tr>
+                    </thead>
+                    <tbody>
+						{% if records %}
+                            {% for record in records %}
+							  <tr>
+								<td><a href="{% url 'record' record.id %}">{{record.id}}</a></td>
+								<td>{{ record.created_at }}</td>
+								<td>{{ record.company_name }}</td>
+								<td>{{ record.mobile_no }}</td>
+								<td>{{ record.email }}</td>
+								<td>{{ record.phone }}</td>
+								<td>{{ record.address }}</td>
+								<td>{{ record.city }}</td>
+								<td>{{ record.state }}</td>
+								<td>{{ record.zipcode }}</td>
+								<td>{{ record.step_name_one }}</td>
+								<td>{{ record.planned_date_one }}</td>
+								<td>{{ record.actual_date_one }}</td>
+								<td>
+                                    <button type="button" class="btn btn-success me-1" href="{% url 'customer_record' record.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{record.id}}">
+                                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                                    </button>
+                                    <!-------modal --view student ---->
+                                    <div class="modal" id="myModal{{record.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Step Done: {{ record.created_at }} {{ record.company_name }}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-unstyled">
+                                                        <li>Created it: <strong>{{ record.created_at }}</strong></li>
+                                                        <li>Step One: <strong>{{ record.step_name_one }}</strong></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" href="{% url 'update_actual_time' record.id}" data-bs-dismiss="modal">Status</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+								<td>{{ record.timedelay_one }}</td>
+								<td>{{ record.step_name_two }}</td>
+								<td>{{ record.planned_date_two }}</td>
+								<td>{{ record.actual_date_two }}</td>
+								<td>
+                                    <button type="button" class="btn btn-success me-1" href="{% url 'customer_record' record.id %}" data-bs-toggle="modal" data-bs-target="#myModal1{{record.id}}">
+                                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                                    </button>
+                                    <!-------modal --view student ---->
+                                    <div class="modal" id="myModal1{{record.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">
+                                                        Step Done: {{ record.created_at }} {{ record.company_name }}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true"></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-unstyled">
+                                                        <li>Created it: <strong>{{ record.created_at }}</strong></li>
+                                                        <li>Step Two: <strong>{{ record.step_name_two }}</strong></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                                <div class="modal-footer">
+<!--                                                    <button type="button" class="btn btn-secondary" href="{% url 'update_actual_time' record.id}" data-bs-dismiss="modal">Status</button>-->
+                                                    <a href="{% url 'update_actual_time' record.id %}" class="btn btn-danger">Status</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+								<td>{{ record.timedelay_two }}</td>
+							  </tr>
+							{% endfor %}
+                        {% endif %}
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+			</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% else %}
+<div class="col-md-6 offset-md-3">
+<h1>Login</h1>
+<br/>
+<form method="POST" action="{% url 'home' %}">
+    {% csrf_token %}
+  <div class="mb-3">
+    <input type = "text" class="form-control" name="username", placeholder="Username" required>
+  </div>
+  <br/>
+  <div class="mb-3">
+    <input type="password" class="form-control" name="password", placeholder="Password" required>
+  </div>
+  <br/>
+  <button type="submit" class="btn btn-secondary">Login</button>
+</form>
+</div>
+{% endif %}
+
+{% endblock %}
